@@ -19,6 +19,7 @@ fileInput.addEventListener("change", async function handleFileSelect(event) {
     await uploadToS3(file, signedUrl);
   } catch (error) {
     renderError(error);
+    return;
   } finally {
     clearFileInput();
   }
