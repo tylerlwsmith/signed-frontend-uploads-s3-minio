@@ -33,7 +33,7 @@ services:
       S3_ID: ${S3_ID:-admin}
       S3_SECRET: ${S3_SECRET:-password}
       S3_REGION: "us-east-1"
-      S3_ENDPOINT: ${S3_ENDPOINT:-http://object-storage:9000}
+      S3_ENDPOINT: ${S3_ENDPOINT:-http://localhost:9000}
     restart: unless-stopped
 
   object-storage:
