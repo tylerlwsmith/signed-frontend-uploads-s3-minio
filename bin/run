@@ -1,0 +1,14 @@
+#! /usr/bin/env bash
+
+# Exit if any command fails.
+set -e
+
+# Exit on Control + C.
+trap exit 1 INT
+
+PROJECT_DIR=$(cd $(dirname $0)/.. & pwd)
+
+export USER_ID=$(id -u) 
+export GROUP_ID=$(id -g)
+
+docker-compose --file $PROJECT_DIR/docker-compose.yml up

@@ -4,6 +4,7 @@ services:
   frontend:
     image: node:18
     command: npm run dev
+    user: ${USER_ID:-1000}:${GROUP_ID:-1000}
     working_dir: /srv/app
     volumes:
       - ./frontend:/srv/app
@@ -19,6 +20,7 @@ services:
   backend:
     image: node:18
     command: npm run dev
+    user: ${USER_ID:-1000}:${GROUP_ID:-1000}
     working_dir: /srv/app
     volumes:
       - ./backend:/srv/app
