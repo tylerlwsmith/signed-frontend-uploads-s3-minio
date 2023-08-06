@@ -15,7 +15,7 @@ services:
     environment:
       UPLOAD_ENDPOINT: ${UPLOAD_ENDPOINT:-http://localhost:4000/uploads}
       MINIO_CONSOLE_URL: ${MINIO_CONSOLE_URL:-http://localhost:9000}
-    restart: unless-stoped
+    restart: unless-stopped
 
   backend:
     image: node:18

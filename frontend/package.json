@@ -1,11 +1,10 @@
 {
   "name": "frontend",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "dev": "parcel"
+    "dev": "parcel --port 3000 src/index.html"
   },
-  "dependencies": {
+  "devDependencies": {
     "parcel": "^2.9.3"
   }
 }
