@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  frontend:
+    image: node:18
+    command: npm run dev
+    working_dir: /srv/app
+    volumes:
+      - ./frontend:/srv/app
+    ports:
+      - 127.0.0.1:${FRONTEND_PORT:-3000}:3000
+    networks:
+      - signed-frontend-uploads
+    environment:
+      UPLOAD_ENDPOINT: ${UPLOAD_ENDPOINT:-http://localhost:4000/uploads}
+      MINIO_CONSOLE_URL: ${MINIO_CONSOLE_URL:-http://localhost:9000}
+    restart: unless-stoped
+
+  backend:
+    image: node:18
+    command: npm run dev
+    working_dir: /srv/app
+    volumes:
+      - ./backend:/srv/app
+    ports:
+      - 127.0.0.1:${BACKEND_PORT:-4000}:3000
+    networks:
+      - signed-frontend-uploads
+    environment:
+      S3_BUCKET: ${S3_BUCKET:-uploads}
+      S3_ID: ${S3_ID:-admin}
+      S3_SECRET: ${S3_SECRET:-password}
+      S3_REGION: "us-east-1"
+      S3_ENDPOINT: ${S3_ENDPOINT:-http://object-storage:9000}
+    restart: unless-stopped
+
+  object-storage:
+    image: minio/minio:latest
+    command: minio server /data/minio --console-address :9090
+    volumes:
+      - minio:/data/minio
+    ports:
+      - 127.0.0.1:${MINIO_PORT:-9000}:9000
+      - 127.0.0.1:${MINIO_CONSOLE_PORT:-9090}:9090
+    networks:
+      - signed-frontend-uploads
+    environment:
+      MINIO_ROOT_USER: ${S3_ID:-admin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET:-password}
+    restart: unless-stopped
+
+volumes:
+  minio:
+
+networks:
+  signed-frontend-uploads:
+    name: signed-frontend-uploads-docker-network

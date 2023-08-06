@@ -1,0 +1,43 @@
+#! /usr/bin/env bash
+
+# Exit if any command fails.
+set -e
+
+# Exit on Control + C.
+trap exit 1 INT
+
+PROJECT_DIR=$(cd $(dirname $0)/.. & pwd)
+
+export DOCKER_BUILDKIT=1
+
+# Install dependencies on the host.
+docker-compose --file $PROJECT_DIR/docker-compose.yml run --rm frontend npm install
+docker-compose --file $PROJECT_DIR/docker-compose.yml run --rm backend npm install
+
+# Determine if the object storage service is currently running.
+RUNNING_OBJECT_STORAGE_CONTAINER_ID=$(
+  docker-compose --file $PROJECT_DIR/docker-compose.yml ps -q object-storage
+)
+
+# If the object storage service is not running, temporarily start it.
+if [ -z "$RUNNING_OBJECT_STORAGE_CONTAINER_ID" ]; then
+  docker-compose --file $PROJECT_DIR/docker-compose.yml  up -d object-storage
+  TEMPORARY_OBJECT_STORAGE_CONTAINER_ID=$(
+    docker-compose --file $PROJECT_DIR/docker-compose.yml ps -q object-storage
+  )
+  sleep 5 # HACK: Give MinIO time to finish booting.
+fi
+
+# Create a default object storage bucket.
+NETWORK_NAME=signed-frontend-uploads-docker-network
+docker run --rm --network $NETWORK_NAME --entrypoint /bin/sh minio/mc -c "
+  mc alias set local http://object-storage:9000 \
+    ${S3_ID:-admin} ${S3_SECRET:-password}
+  mc mb local/${S3_BUCKET:-uploads} 2>/dev/null
+  mc anonymous set public local/${S3_BUCKET:-uploads}
+"
+
+# If object storage was temporarily started, stop it.
+if [ -n "$TEMPORARY_OBJECT_STORAGE_CONTAINER_ID" ]; then
+  docker stop $TEMPORARY_OBJECT_STORAGE_CONTAINER_ID
+fi
