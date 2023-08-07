@@ -25,9 +25,9 @@ fileInput.addEventListener("change", async function handleFileSelect(event) {
   }
 
   if (file.type.match("image/*")) {
-    showUploadedImage(signedUrl);
+    showUploadedImage(file, signedUrl);
   } else {
-    clearResultsContainer();
+    showUploadSuccessMessage(file);
   }
 });
 
@@ -58,11 +58,17 @@ function renderError(error) {
   resultContainer.innerHTML = error.message;
 }
 
-function showUploadedImage(signedImageUrl) {
+function showUploadedImage(file, signedImageUrl) {
   const signedUrlObject = new URL(signedImageUrl);
-  resultContainer.innerHTML = `<img src="${
+  resultContainer.innerHTML = `
+  <p>Uploaded <code>${file.name}</code> successfully.</p>
+  <img src="${
     signedUrlObject.origin + signedUrlObject.pathname
   }" alt="Uploaded image" style="max-width: 100%">`;
+}
+
+function showUploadSuccessMessage(file) {
+  resultContainer.innerHTML = `<p>Uploaded <code>${file.name}</code> successfully.</p>`;
 }
 
 function clearResultsContainer() {
