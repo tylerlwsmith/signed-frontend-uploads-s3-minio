@@ -13,9 +13,7 @@ fileInput.addEventListener("change", async function handleFileSelect(event) {
 
   let signedUrl;
   try {
-    signedUrl = await getSignedUrl(file, process.env.UPLOAD_ENDPOINT).then(
-      ({ data }) => data.signedUrl
-    );
+    signedUrl = await getSignedUrl(file, process.env.UPLOAD_ENDPOINT);
     await uploadToS3(file, signedUrl);
   } catch (error) {
     renderError(error);
@@ -32,22 +30,24 @@ fileInput.addEventListener("change", async function handleFileSelect(event) {
 });
 
 async function getSignedUrl(file, endpoint) {
-  return await axios.post(
-    endpoint,
-    {
-      contentType: file.type,
-      contentLength: file.size,
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
+  return await axios
+    .post(
+      endpoint,
+      {
+        contentType: file.type,
+        contentLength: file.size,
       },
-    }
-  );
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => response.data.signedUrl);
 }
 
 async function uploadToS3(file, signedUrl) {
-  await axios.put(signedUrl, file, {
+  return await axios.put(signedUrl, file, {
     headers: {
       "Content-Type": "form/multipart",
     },
