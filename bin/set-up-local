@@ -8,8 +8,11 @@ trap exit 1 INT
 
 PROJECT_DIR=$(cd $(dirname $0)/.. & pwd)
 
-export USER_ID=$(id -u) 
-export GROUP_ID=$(id -g)
+# Fix Linux user permissions in the container.
+if [ "$(uname -s)" = "Linux" ]; then
+  export USER_ID=$(id -u) 
+  export GROUP_ID=$(id -g)
+fi
 
 export DOCKER_BUILDKIT=1
 
