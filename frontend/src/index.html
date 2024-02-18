@@ -4,24 +4,40 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
     <title>Signed Front-End Uploads With S3/MinIO</title>
   </head>
   <body>
-    <h1>Signed Front-End Uploads With S3/MinIO</h1>
+    <div class="layout">
+      <header class="header">
+        <nav class="nav">
+          <ul class="nav-items">
+            <li class="nav-item">
+              <a class="nav-link" href="%VITE_MINIO_CONSOLE_URL%">
+                MinIO Console
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
-    <p>
-      <a href="%VITE_MINIO_CONSOLE_URL%">View the MinIO Console</a>
-    </p>
+      <main class="main">
+        <div class="card">
+          <h1 class="page-title">
+            <span class="page-title__top">Signed Front-End Uploads</span>
+            <span class="page-title__bottom">with S3/MinIO</span>
+          </h1>
 
-    <label for="file-input">File upload</label>
-    <div>
-      <input id="file-input" type="file" />
+          <label for="file-input" class="file-input-label">Select File</label>
+          <input id="file-input" type="file" class="sr-only" />
+
+          <div id="result-container" class="result-container">
+            <!-- Uploads and errors will be rendered here. -->
+          </div>
+        </div>
+      </main>
     </div>
 
-    <div id="result-container" style="max-width: 500px; margin-top: 20px">
-      <!-- Uploads and errors will be rendered here. -->
-    </div>
-
-    <script type="module" src="/s3-upload.js"></script>
+    <script type="module" src="./s3-upload.js"></script>
   </body>
 </html>
