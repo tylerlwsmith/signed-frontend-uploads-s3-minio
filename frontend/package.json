@@ -1,18 +1,13 @@
 {
   "name": "frontend",
+  "private": true,
   "version": "1.0.0",
-  "alias": {
-    "process": {
-      "global": "process"
-    }
-  },
+  "type": "module",
   "scripts": {
-    "dev": "parcel --port 3000 src/index.html"
+    "dev": "vite"
   },
   "devDependencies": {
-    "buffer": "^6.0.3",
-    "parcel": "^2.9.3",
-    "posthtml-expressions": "^1.11.1"
+    "vite": "^5.1.0"
   },
   "dependencies": {
     "axios": "^1.4.0"

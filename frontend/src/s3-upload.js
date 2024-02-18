@@ -13,7 +13,7 @@ fileInput.addEventListener("change", async function handleFileSelect(event) {
 
   let signedUrl;
   try {
-    signedUrl = await getSignedUrl(file, process.env.UPLOAD_ENDPOINT);
+    signedUrl = await getSignedUrl(file, import.meta.env.VITE_UPLOAD_ENDPOINT);
     await uploadToS3(file, signedUrl);
   } catch (error) {
     renderError(error);

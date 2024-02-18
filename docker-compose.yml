@@ -9,12 +9,12 @@ services:
     volumes:
       - ./frontend:/srv/app
     ports:
-      - 127.0.0.1:${FRONTEND_PORT:-3000}:3000
+      - 127.0.0.1:${FRONTEND_PORT:-3000}:5173
     networks:
       - signed-frontend-uploads
     environment:
-      UPLOAD_ENDPOINT: ${UPLOAD_ENDPOINT:-http://localhost:4000/uploads}
-      MINIO_CONSOLE_URL: ${MINIO_CONSOLE_URL:-http://localhost:9000}
+      VITE_UPLOAD_ENDPOINT: ${UPLOAD_ENDPOINT:-http://localhost:4000/uploads}
+      VITE_MINIO_CONSOLE_URL: ${MINIO_CONSOLE_URL:-http://localhost:9000}
     restart: unless-stopped
 
   backend:
