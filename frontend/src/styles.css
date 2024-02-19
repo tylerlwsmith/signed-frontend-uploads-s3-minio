@@ -104,10 +104,16 @@ code {
     font-size: 3rem;
   }
 }
+@media (min-width: 1000px) {
+  .page-title__top {
+    font-size: 3.5rem;
+  }
+}
 
 .page-title__bottom {
   font-weight: lighter;
   font-size: 1.5rem;
+  color: #666;
 }
 @media (min-width: 600px) {
   .page-title__bottom {
@@ -118,7 +124,7 @@ code {
 .file-input-label {
   position: relative;
   background: #0000ff;
-  color: white;
+  color: #fff;
   margin-inline: auto;
   display: block;
   width: fit-content;
