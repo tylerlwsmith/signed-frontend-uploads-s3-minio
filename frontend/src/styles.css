@@ -14,7 +14,11 @@
 }
 
 img {
-  max-width: 100;
+  max-width: 100%;
+}
+
+code {
+  word-break: break-all;
 }
 
 .sr-only {
@@ -40,7 +44,12 @@ img {
 
 .header {
   grid-area: header;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
+}
+@media (min-width: 1064px) {
+  .header {
+    padding-inline: 2rem;
+  }
 }
 
 .nav-items {
@@ -56,7 +65,6 @@ img {
 
   &:hover {
     text-decoration: underline;
-    color: hsl(180, 64%, 26%);
   }
 }
 
@@ -65,7 +73,7 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1rem 3rem;
 }
 
 .card {
@@ -86,14 +94,25 @@ img {
 
 .page-title__top {
   display: block;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bolder;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
 }
+@media (min-width: 600px) {
+  .page-title__top {
+    font-size: 3rem;
+  }
+}
 
 .page-title__bottom {
   font-weight: lighter;
+  font-size: 1.5rem;
+}
+@media (min-width: 600px) {
+  .page-title__bottom {
+    font-size: 2rem;
+  }
 }
 
 .file-input-label {
@@ -105,9 +124,10 @@ img {
   width: fit-content;
   cursor: pointer;
   padding: 1rem 3rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   border-radius: 0.5rem;
   transition: transform 0.2s;
+  text-align: center;
   &:hover {
     background: #0000cc;
   }
@@ -115,11 +135,24 @@ img {
     transform: translateY(2px);
   }
 }
+@media (min-width: 600px) {
+  .file-input-label {
+    font-size: 1.5rem;
+  }
+}
 
 .result-container {
-  max-width: 500px;
+  text-align: center;
   &:has(*) {
-    margin-top: 20px;
-    border: 1px solid red;
+    margin-top: 3rem;
   }
+}
+
+.result-container__image {
+  height: auto;
+  margin-top: 2rem;
+  display: inline-block;
+  max-height: 200px;
+  max-width: 500px;
+  margin-inline: auto;
 }

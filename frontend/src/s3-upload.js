@@ -62,9 +62,11 @@ function showUploadedImage(file, signedImageUrl) {
   const signedUrlObject = new URL(signedImageUrl);
   resultContainer.innerHTML = `
   <p>Uploaded <code>${file.name}</code> successfully.</p>
-  <img src="${
-    signedUrlObject.origin + signedUrlObject.pathname
-  }" alt="Uploaded image" style="max-width: 100%">`;
+  <img
+    src="${signedUrlObject.origin + signedUrlObject.pathname}"
+    alt="Uploaded image"
+    class="result-container__image"
+  >`;
 }
 
 function showUploadSuccessMessage(file) {
